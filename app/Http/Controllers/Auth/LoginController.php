@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -14,6 +15,14 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
+        $userExists = User::where('email', $request->email)->exists();
+
+        if (!$userExists) {
+            return redirect()
+                ->route('auth.login.index')
+                ->with('msg_error', 'Usuário não existe.');
+        }
+
         $credentials = [
             'email' => $request->email,
             'password' => $request->password
