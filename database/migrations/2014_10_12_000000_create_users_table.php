@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->unsignedBigInteger('role_id');
+            $table->string('reset_password_token')->nullable();
             $table->foreign('role_id')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();

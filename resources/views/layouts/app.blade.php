@@ -52,7 +52,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
                                 Produtos
                             </a>
-                            
+                            <a class="nav-link" href="{{ route('admin.orders.create') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-order"></i></div>
+                                Pedidos
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

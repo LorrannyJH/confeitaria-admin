@@ -10,21 +10,18 @@
 @section('content')
 
 <div class="mx-auto">
-    <h5 class="text-center mb-3">Login</h5>
+    <h5 class="text-center mb-3">Recuperar Senha</h5>
     <div class="card shadow auth-card">
         <div class="card-body">
-            <form method="POST" action="{{route('auth.login.login')}}">
+            <form method="POST" action="{{route('auth.send-recover-link')}}">
                 @csrf
                 <div class="form-group">
                     <input type="email" placeholder="email" class="form-control" name="email">
                 </div>
-                <div class="form-group">
-                    <input type="password" placeholder="senha" class="form-control" name="password">
-                </div>
+                
                 <div>
-                    <button class="btn btn-success btn-block">Entrar</button>
+                    <button class="btn btn-success btn-block">Enviar link</button>
                 </div>
-                <a href="{{route('auth.show-recover-password-form')}}">Esqueci minha senha</a>
             </form>
         </div>
     </div>
