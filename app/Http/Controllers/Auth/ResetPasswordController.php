@@ -52,7 +52,7 @@ class ResetPasswordController extends Controller
 
             return redirect()
                 ->route('auth.login.index')
-                ->with('success', 'Clique no link que enviamos em seu e-mail para redefinir a sua senha.');
+                ->with('msg_success', 'Clique no link que enviamos em seu e-mail para redefinir a sua senha.');
 
         } catch (\Exception $e) {
             DB::rollback();

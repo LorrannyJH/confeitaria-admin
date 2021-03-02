@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
     public function index()
     {
         $data = [
-            'products' => Product::all()
+            'products' => Product::paginate(5)
         ];
         return view('admin.products.index', compact('data'));
     }
@@ -99,5 +101,10 @@ class ProductController extends Controller
         return redirect()
             ->route('admin.products.index')
             ->with('msg_success', 'Produto deletado com sucesso!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
     }
 }

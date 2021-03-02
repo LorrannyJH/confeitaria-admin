@@ -53,6 +53,6 @@
     </tbody>
 </table>
 
-
+{{ $data['users']->links() }}
 
 @endsection

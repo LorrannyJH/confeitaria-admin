@@ -16,12 +16,17 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('auth.login.logout');
 Route::namespace('Admin')->name('admin.')->middleware('auth')->group(function(){
     //dashboard
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+
     //Users
     Route::resource('users', 'UserController');
+
     //Customers
     Route::resource('customers', 'CustomerController');
+
     //Products
+    Route::get('products/export', 'ProductController@export')->name('products.export');
     Route::resource('products', 'ProductController');
+
     //Orders
     Route::resource('orders', 'OrderController');
 });

@@ -52,8 +52,8 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
                                 Produtos
                             </a>
-                            <a class="nav-link" href="{{ route('admin.orders.create') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-order"></i></div>
+                            <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                                 Pedidos
                             </a>
                         </div>
@@ -120,9 +120,8 @@
                                     </div>
                                 @endif
                             </div>
-
-                            @yield('content')
                         </div>
+                        @yield('content')
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-4">
@@ -141,7 +140,9 @@
       
         <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
+        
 
         @yield('js')
     </body>

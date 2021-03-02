@@ -8,13 +8,21 @@
 
 @section('content')
 
-    <form action="{{route('admin.orders.store')}}" method="post">
-        @csrf
-        @include('admin.orders._partials.form')
-        <div class="form-group">
-            <button class="btn btn-success">Cadastrar</button>
-        </div> 
-    </form>
+<div class="col-12">
+    
+    <div class="card-body">
+        <form action="{{route('admin.orders.update', $data['order']->id)}}" method="post">
+            @csrf
+            @method('PUT')
+            @include('admin.orders._partials.form')
+            <div class="form-group">
+                <button class="btn btn-success">Atualizar</button>
+            </div> 
+        </form>
+    </div>
+    
+</div>
+
 
 @endsection
 

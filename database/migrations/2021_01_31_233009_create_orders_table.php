@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             $table->dateTime('delivery_date');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('statuss');
             $table->softDeletes();
             $table->timestamps();
         });

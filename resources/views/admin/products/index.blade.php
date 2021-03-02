@@ -8,8 +8,13 @@
 
 @section('content')
 <div class="row mb-3 text-right" >
-    <div class="col-12 ">
-
+    <div class="col-12">
+        <a
+            class="btn btn-primary"
+            href="{{route('admin.products.export')}}"
+        >
+            Exportar produtos
+        </a>
         <a
             class="btn btn-success"
             href="{{route('admin.products.create')}}"
@@ -51,7 +56,7 @@
         @endforeach
     </tbody>
 </table>
-
+{{ $data['products']->links() }}
 
 
 @endsection

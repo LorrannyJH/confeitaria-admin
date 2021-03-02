@@ -13,7 +13,7 @@ class CustomerController extends Controller
     public function index()
     {
         $data = [
-            'customers' => Customer::all()
+            'customers' => Customer::paginate(5)
         ];
         return view('admin.customers.index', compact('data'));
     }

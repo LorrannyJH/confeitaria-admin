@@ -3,10 +3,10 @@
         <input type="text" placeholder="usuário" class="form-control" name="customer[name]" value="{{old('customer.name',$customer->name ?? '')}}" >
     </div>
     <div class="form-group col-4">
-        <input type="text" placeholder="Telefone" class="form-control" name="customer[phone]" value="{{old('customer.phone',$customer->phone ?? '')}}" >
+        <input type="text" placeholder="Telefone" class="form-control phone" name="customer[phone]" value="{{old('customer.phone',$customer->phone ?? '')}}" >
     </div>
     <div class="form-group col-4">
-        <input type="text" placeholder="CEP" class="form-control" name="address[cep]" id = "cep" value="{{old('customer.name',$customer->name ?? '')}}" >
+        <input type="text" placeholder="CEP" class="form-control cep" name="address[cep]" id = "cep" value="{{old('customer.cep',$customer->cep ?? '')}}" >
     </div>
     <div class="form-group col-4">
         <input type="text" placeholder="Rua" class="form-control" name="address[street]" id = "street" value="{{old('address.street',$customer->address->street ?? '')}}" >
