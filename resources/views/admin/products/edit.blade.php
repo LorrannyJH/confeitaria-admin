@@ -24,5 +24,8 @@
     
 </div>
 
+@endsection
 
+@section('js')
+    <script src="{{ asset('js/admin/products/form.js') }}"></script>
 @endsection

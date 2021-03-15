@@ -21,6 +21,7 @@ class CreateOrderProductTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('price');
             $table->integer('quantity');
+            $table->double('kg')->nullable();
             $table->timestamps();
         });
     }

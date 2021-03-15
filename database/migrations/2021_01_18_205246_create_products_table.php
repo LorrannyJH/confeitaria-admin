@@ -15,7 +15,8 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->string('description')->nullable();
             $table->string('photo')->nullable(); 
-            $table->boolean('price_by_weight')->nullable();
+            $table->string('unit_type')->nullable();
+            $table->integer('pack_quantity')->nullable();
             $table->timestamps();
         });
     }

@@ -17,4 +17,9 @@ class Customer extends Model
     {
         return $this->hasOne('App\Address');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
 }

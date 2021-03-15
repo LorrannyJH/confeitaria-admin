@@ -21,7 +21,7 @@ class CreateAddressesTable extends Migration
             $table->string('district');
             $table->string('city');
             $table->string('uf');
-            $table->string('complement');
+            $table->string('complement')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->timestamps();

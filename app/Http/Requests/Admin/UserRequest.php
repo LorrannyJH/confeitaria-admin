@@ -16,12 +16,19 @@ class UserRequest extends FormRequest
     {
         $userId = $this->route('user') ? $this->route('user')->id : '';
 
-        return [
+        $rules = [
             'user.name' => ['required'],
             'user.email' => ['required', 'email', 'unique:users,email,'.$userId.',id'],
-            'user.role_id' => ['required'],
-            'user.password' => ['required', 'confirmed'],
         ];
+
+        if ($this->method() == 'POST') {
+            $rules['user.role_id'] = ['required'];
+            $rules['user.password'] = ['required', 'confirmed'];
+        } else {
+            $rules['user.password'] = ['sometimes', 'confirmed'];
+        }
+
+        return $rules;
     }
 
     public function attributes()

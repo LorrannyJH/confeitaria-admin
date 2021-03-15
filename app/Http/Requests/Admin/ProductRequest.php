@@ -15,11 +15,12 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            
             'product.name' => ['required'],
             'product.price' => ['required'],
             'product.description' => ['max:140'],
-            'product.photo' => ['nullable']
+            'product.photo' => ['nullable'],
+            'product.unit_type' => ['required'],
+            'product.pack_quantity' => ['required_if:product.unit_type,==,pack']
         ];
     }
 
@@ -37,6 +38,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute é obrigatório.',
+            'required_if' => 'O campo :attribute é obrigatório.',
             'unique' => 'O valor informado no campo :attribute já existe.',
             'max' => 'O campo :attribute deve conter no máximo 140 caracteres',
             'mimes' => 'O campo :attribute deve ser do tipo PNG ou JPG'

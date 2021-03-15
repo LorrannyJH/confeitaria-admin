@@ -8,6 +8,7 @@
         <meta name="author" content="" />
         <title>Confeitaria Admin - @yield('title')</title>
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/sweetalert2.css') }}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -40,10 +41,12 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href="{{ route('admin.users.index') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                                Usuários
-                            </a>
+                            @if(auth()->user()->role->name == 'admin')
+                                <a class="nav-link" href="{{ route('admin.users.index') }}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                    Usuários
+                                </a>
+                            @endif
                             <a class="nav-link" href="{{ route('admin.customers.index') }}">
                                 <div class="sb-nav-link-icon"><i class="far fa-address-book"></i></div>
                                 Clientes
@@ -52,8 +55,8 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
                                 Produtos
                             </a>
-                            <a class="nav-link" href="{{ route('admin.orders.create') }}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-order"></i></div>
+                            <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                                 Pedidos
                             </a>
                         </div>
@@ -120,9 +123,8 @@
                                     </div>
                                 @endif
                             </div>
-
-                            @yield('content')
                         </div>
+                        @yield('content')
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-4">
@@ -141,6 +143,8 @@
       
         <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('js/sweetalert2.js') }}"></script>
+        <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
 
         @yield('js')

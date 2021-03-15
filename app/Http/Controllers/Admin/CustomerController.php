@@ -13,7 +13,7 @@ class CustomerController extends Controller
     public function index()
     {
         $data = [
-            'customers' => Customer::all()
+            'customers' => Customer::paginate(5)
         ];
         return view('admin.customers.index', compact('data'));
     }
@@ -34,7 +34,6 @@ class CustomerController extends Controller
 
     public function edit(Customer $customer)
     {
-
         return view('admin.customers.edit', compact('customer'));
     }
 
@@ -50,7 +49,15 @@ class CustomerController extends Controller
 
     public function destroy(Customer $customer)
     {
-        
+        if (count($customer->orders)) {
+            return redirect()
+                ->route('admin.customers.index')
+                ->with(
+                    'msg_error',
+                    'Não é possível deletar este cliente pois ele possui pedidos cadastrados!'
+                );
+        }
+
         $customer->delete();
 
         return redirect()

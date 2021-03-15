@@ -5,13 +5,15 @@
     <div class="form-group col-4">
         <input type="email" placeholder="email" class="form-control" name="user[email]" value="{{old('user.email',$user->email ?? '')}}">
     </div>
-    <div class="form-group col-4">
-        <select class="form-control" name="user[role_id]">
-        @foreach($roles as $role)
-            <option {{isset($user) && $user->role_id == $role->id ? 'selected' : ''}} value="{{$role->id}}">{{$role->name}}</option>
-        @endforeach
-        </select>
-    </div>
+    @if(!isset($user) || (isset($user) && $user->id != auth()->user()->id))
+        <div class="form-group col-4">
+            <select class="form-control" name="user[role_id]">
+            @foreach($roles as $role)
+                <option {{isset($user) && $user->role_id == $role->id ? 'selected' : ''}} value="{{$role->id}}">{{$role->name}}</option>
+            @endforeach
+            </select>
+        </div>
+    @endif
     <div class="form-group col-6">
         <input type="password" placeholder="senha" class="form-control" name="user[password]">
     </div>

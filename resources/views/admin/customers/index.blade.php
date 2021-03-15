@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', 'Clientes')
 
 @section('breadcrumb')
     <li class="breadcrumb-item "><a href="{{route('admin.dashboard.index')}}">Dashboard</a></li>
@@ -33,7 +33,11 @@
             <tr>
                 <td> {{ $customer->name }}  </td>
                 <td> {{ $customer->phone }} </td>
-                <td> {{ $customer->address->street }} - Nº {{ $customer->address->number }} </td>
+                @if($customer->address)
+                    <td> {{ $customer->address->street }} - Nº {{ $customer->address->number }} </td>
+                @else
+                    <td><small>Sem Endereço</small></td>
+                @endif
                 
                 <td class="d-flex">
                     <a
@@ -42,7 +46,7 @@
                     >
                         Editar
                     </a>
-                    <form action="{{route('admin.customers.destroy', $customer->id)}}" method="POST">
+                    <form action="{{route('admin.customers.destroy', $customer->id)}}" method="POST" class="delete-form">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger ml-2">Deletar</button>
@@ -52,7 +56,31 @@
         @endforeach
     </tbody>
 </table>
+{{ $data['customers']->links() }}
+@endsection
 
+@section('js')
+    <script>
+        $('.delete-form').on('submit', function(event) {
+            event.preventDefault();
 
+            let form = $(this);
 
+            Swal.fire({
+                title: 'Tem certeza que deseja excluir este usuário?',
+                text: "Esta ação não poderá ser revertida!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Deletar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.unbind('submit');
+                    form.submit();
+                }
+            });
+        });
+    </script>
 @endsection

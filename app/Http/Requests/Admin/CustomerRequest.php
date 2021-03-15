@@ -24,7 +24,7 @@ class CustomerRequest extends FormRequest
             'address.district' => ['required'],
             'address.city' => ['required'],
             'address.uf' => ['required'],
-            'address.complement' => []
+            'address.complement' => ['nullable']
         ];
     }
 

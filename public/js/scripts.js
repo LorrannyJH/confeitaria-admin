@@ -25,4 +25,24 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
+    $('.date').mask('00/00/0000');
+    $('.date_and_hour').mask('00/00/0000 00:00');
+    $('.hour').mask('00:00');
+    $('.cep').mask('00000-000');
+    $('.money').mask("#.##0,00", {reverse: true});
+    $('.uf').mask('AA');
+
+    var phoneMask = function (val) {
+        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+    spOptions = {
+    onKeyPress: function(val, e, field, options) {
+        field.mask(phoneMask.apply({}, arguments), options);
+        }
+    };
+    
+    $('.phone').mask(phoneMask, spOptions);
+
+
+
 })(jQuery);

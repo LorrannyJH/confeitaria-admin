@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         $data = [
-            'users' => User::all()
+            'users' => User::paginate(5)
         ];
         return view('admin.users.index', compact('data'));
     }
@@ -50,6 +50,11 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if ($user->id == auth()->user()->id) {
+            return redirect()
+                ->route('admin.users.index')
+                ->with('msg_error', 'Não é possível deletar seu próprio usuário!');
+        }
         
         $user->delete();
 

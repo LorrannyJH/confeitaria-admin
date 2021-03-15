@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
     public function index()
     {
         $data = [
-            'products' => Product::all()
+            'products' => Product::paginate(5)
         ];
         return view('admin.products.index', compact('data'));
     }
@@ -27,7 +30,6 @@ class ProductController extends Controller
         $nameFile = null;
     
         if ($request->hasFile('product.photo') && $request->file('product.photo')->isValid()) {
-            
             $name = uniqid(date('HisYmd'));
             $extension = $request->product['photo']->extension();
             $nameFile = "{$name}.{$extension}";
@@ -39,11 +41,11 @@ class ProductController extends Controller
                     ->with('msg_error', 'Falha ao fazer upload')
                     ->withInput();
             }
- 
         }
 
         $requestData = $request->all();
         $requestData['product']['photo'] = 'products/' . $nameFile;
+
         Product::create($requestData['product']);
         
         return redirect()
@@ -61,7 +63,6 @@ class ProductController extends Controller
         $nameFile = null;
 
         if ($request->hasFile('product.photo') && $request->file('product.photo')->isValid()) {
-            
             $name = uniqid(date('HisYmd'));
             $extension = $request->product['photo']->extension();
             $nameFile = "{$name}.{$extension}";
@@ -73,7 +74,6 @@ class ProductController extends Controller
                     ->with('msg_error', 'Falha ao fazer upload')
                     ->withInput();
             }
- 
         }
 
         $requestData = $request->all();
@@ -82,6 +82,10 @@ class ProductController extends Controller
             $requestData['product']['photo'] = 'products/' . $nameFile;
         } else {
             $requestData['product']['photo'] = $product->photo;
+        }
+
+        if ($requestData['product']['unit_type'] !== 'pack') {
+            $requestData['product']['pack_quantity'] = null;
         }
 
         $product->update($requestData['product']);
@@ -93,11 +97,37 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        if (count($product->orderProducts)) {
+            return redirect()
+                ->route('admin.products.index')
+                ->with(
+                    'msg_error',
+                    'Não é possível deletar este produto pois ele consta em pedidos cadastrados!'
+                );
+        }
         
         $product->delete();
 
         return redirect()
             ->route('admin.products.index')
             ->with('msg_success', 'Produto deletado com sucesso!');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->files->get('file');
+
+        try {
+            Excel::import(new ProductImport, $file);
+        } catch(\Exception $exception) {
+            return back()->with('msg_error', 'Erro ao importar produtos!');
+        }
+
+        return back()->with('msg_success', 'Produtos importados com sucesso!');
     }
 }

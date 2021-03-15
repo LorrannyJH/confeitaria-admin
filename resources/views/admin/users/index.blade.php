@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', 'Usuários')
 
 @section('breadcrumb')
     <li class="breadcrumb-item "><a href="{{route('admin.dashboard.index')}}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Usuário</li>
+    <li class="breadcrumb-item active">Usuários</li>
 @endsection
 
 @section('content')
@@ -42,17 +42,43 @@
                     >
                         Editar
                     </a>
-                    <form action="{{route('admin.users.destroy', $user->id)}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger ml-2">Deletar</button>
-                    </form>
+                    @if($user->id != auth()->user()->id)
+                        <form action="{{route('admin.users.destroy', $user->id)}}" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger ml-2">Deletar</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+{{ $data['users']->links() }}
+@endsection
 
+@section('js')
+    <script>
+        $('.delete-form').on('submit', function(event) {
+            event.preventDefault();
 
+            let form = $(this);
 
+            Swal.fire({
+                title: 'Tem certeza que deseja excluir este usuário?',
+                text: "Esta ação não poderá ser revertida!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Deletar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.unbind('submit');
+                    form.submit();
+                }
+            });
+        });
+    </script>
 @endsection
