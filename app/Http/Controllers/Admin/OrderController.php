@@ -101,7 +101,6 @@ class OrderController extends Controller
             'delivery_date' => $deliveryDate,
             'customer_id' => $request->order['customer_id'],
             'status_id' => $request->order['status_id'],
-
         ]);
 
         foreach ($order->orderProducts as $orderProduct) {
